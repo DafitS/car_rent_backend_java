@@ -10,4 +10,5 @@ public interface CarCategoryRepository extends JpaRepository <CarCategory, Long>
 
     Optional<CarCategory> findByPublicId(UUID publicId);
 
+    boolean existsByName(String name);
 }

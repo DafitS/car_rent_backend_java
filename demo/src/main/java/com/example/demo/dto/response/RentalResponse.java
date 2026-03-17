@@ -12,8 +12,8 @@ import java.util.UUID;
 public class RentalResponse {
 
     private UUID publicId;
-    private CarResponse car;
-    private UserResponse user;
+    private UUID carId;
+    private UUID userId;
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;

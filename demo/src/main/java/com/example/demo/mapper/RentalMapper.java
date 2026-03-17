@@ -22,8 +22,8 @@ public class RentalMapper {
     {
         return RentalResponse.builder()
                 .publicId(rental.getPublicId())
-                .car(CarMapper.mapToCarResponse(rental.getCar()))
-                .user(UserMapper.mapToUserResponse(rental.getUser()))
+                .carId(rental.getCar().getPublicId())
+                .userId(rental.getUser().getPublicId())
                 .startDate(rental.getStartDate())
                 .endDate(rental.getEndDate())
                 .status(rental.getStatus().name())

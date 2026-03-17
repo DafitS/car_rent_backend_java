@@ -2,6 +2,7 @@ package com.example.demo.dto.request;
 
 import lombok.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -10,8 +11,8 @@ import java.time.LocalDate;
 @Builder
 public class RentalRequest {
 
-    private Long carId;
-    private Long userId;
+    private UUID carId;
+    private UUID userId;
     private LocalDate startDate;
     private LocalDate endDate;
 }
