@@ -13,6 +13,8 @@ public class UserMapper {
         user.setEmail(userRequest.getEmail());
         user.setPhone(userRequest.getPhoneNumber());
         user.setDriverLicenseNumber(userRequest.getDriverLicenseNumber());
+        user.setPassword(userRequest.getPassword());
+        user.setUserRole(userRequest.getUserRole());
         return user;
     }
 

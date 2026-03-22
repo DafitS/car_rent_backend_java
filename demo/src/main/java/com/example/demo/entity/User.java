@@ -1,9 +1,14 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.example.demo.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -12,7 +17,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity{
+public class User extends BaseEntity implements UserDetails {
 
     private String firstName;
 
@@ -24,4 +29,21 @@ public class User extends BaseEntity{
     private String phone;
 
     private String driverLicenseNumber;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(name = "role_type")
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + userRole));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

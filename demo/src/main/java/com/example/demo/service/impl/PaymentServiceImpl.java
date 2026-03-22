@@ -4,6 +4,7 @@ import com.example.demo.dto.request.PaymentRequest;
 import com.example.demo.dto.response.PaymentResponse;
 import com.example.demo.entity.Payment;
 import com.example.demo.entity.Rental;
+import com.example.demo.enums.PaymentStatus;
 import com.example.demo.exception.PaymentNotFoundException;
 import com.example.demo.exception.RentalNotFoundException;
 import com.example.demo.mapper.PaymentMapper;
@@ -33,7 +34,19 @@ public class PaymentServiceImpl implements PaymentService {
 
         Payment payment = PaymentMapper.mapToPayment(request, rental);
 
+        payment.setStatus(
+                (request.getAmount().compareTo(rental.getTotalPrice()) < 0)?
+                        PaymentStatus.FAILED:
+                            PaymentStatus.PENDING
+        );
+
+
         Payment saved = paymentRepository.save(payment);
+
+        if(payment.getStatus() == PaymentStatus.FAILED){
+            rental.setPaymentFailed(true);
+            rentalRepository.save(rental);
+        }
 
         return PaymentMapper.mapToPaymentResponse(saved);
     }

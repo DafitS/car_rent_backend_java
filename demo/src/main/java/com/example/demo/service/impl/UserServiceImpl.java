@@ -8,6 +8,7 @@ import com.example.demo.exception.user.UserNotFoundException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -32,6 +35,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = UserMapper.mapToUser(userRequest);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         User savedUser = userRepository.save(user);
 
         return UserMapper.mapToUserResponse(savedUser);

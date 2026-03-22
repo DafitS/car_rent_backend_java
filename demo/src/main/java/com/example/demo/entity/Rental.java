@@ -27,6 +27,9 @@ public class Rental extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private RentalStatus status;
 
+    @Column(nullable = false)
+    private boolean paymentFailed = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

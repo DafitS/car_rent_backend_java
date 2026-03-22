@@ -1,5 +1,6 @@
 package com.example.demo.dto.request;
 
+import com.example.demo.enums.UserRole;
 import lombok.*;
 
 @Getter
@@ -14,4 +15,6 @@ public class UserRequest {
     private String email;
     private String phoneNumber;
     private String driverLicenseNumber;
+    private String password;
+    private UserRole userRole;
 }

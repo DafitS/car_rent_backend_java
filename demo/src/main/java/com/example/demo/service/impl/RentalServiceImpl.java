@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +41,12 @@ public class RentalServiceImpl implements RentalService {
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Rental rental = RentalMapper.mapToRental(rentalRequest, car, user);
+
+        long daysBetween = ChronoUnit.DAYS.between(rentalRequest.getStartDate(), rentalRequest.getEndDate());
+        BigDecimal pricePerDay = car.getCategory().getPricePerDay();
+        BigDecimal daysToBigDecimal = BigDecimal.valueOf(daysBetween);
+        rental.setTotalPrice(pricePerDay.multiply(daysToBigDecimal));
+
 
         Rental savedRental = rentalRepository.save(rental);
 

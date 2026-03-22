@@ -30,7 +30,7 @@ public class Payment extends BaseEntity{
 
     private LocalDateTime paymentDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")
     private Rental rental;
 }
