@@ -24,8 +24,12 @@ public abstract class BaseEntity {
 
     @PrePersist
     public void prePersist() {
-        publicId = UUID.randomUUID();
-        createdAt = LocalDateTime.now();
+        if (publicId == null) {
+            publicId = UUID.randomUUID();
+        }
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
     }
 
 }
